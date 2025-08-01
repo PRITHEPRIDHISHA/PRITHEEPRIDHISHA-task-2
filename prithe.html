@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact & To-Do App</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      margin: 0;
+      padding: 20px;
+      background: linear-gradient(to right, #ffecd2, #fcb69f);
+      color: #333;
+    }
+
+    h1 {
+      text-align: center;
+      font-weight: 700;
+      color: #4b0082;
+      margin-bottom: 30px;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+    }
+
+    .form, .todo {
+      background: #ffffffdd;
+      padding: 25px;
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(10px);
+    }
+
+    .form h2, .todo h2 {
+      color: #8e44ad;
+      margin-bottom: 20px;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 15px;
+      border: none;
+      border-radius: 10px;
+      background: #f3f3f3;
+      font-size: 15px;
+    }
+
+    button {
+      background: #6a0dad;
+      color: #fff;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 8px;
+      font-size: 15px;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+
+    button:hover {
+      background: #5a0099;
+    }
+
+    #form-status {
+      margin-top: 10px;
+      font-weight: 500;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    ul li {
+      background: #ffe0f0;
+      margin: 10px 0;
+      padding: 12px;
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    ul li span {
+      flex: 1;
+      font-weight: 500;
+    }
+
+    ul li button {
+      background: #e74c3c;
+      border: none;
+      color: white;
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 13px;
+    }
+
+    ul li button:hover {
+      background: #c0392b;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Contact Us & To-Do List</h1>
+
+  <div class="container">
+
+    <!-- Contact Form -->
+    <div class="form">
+      <h2>Contact Us</h2>
+      <input type="text" id="name" placeholder="Your Name" required />
+      <input type="email" id="email" placeholder="Your Email" required />
+      <input type="text" id="subject" placeholder="Subject" required />
+      <textarea id="message" rows="4" placeholder="Your Message..." required></textarea>
+      <button onclick="submitForm()">Send Message</button>
+      <p id="form-status"></p>
+    </div>
+
+    <!-- To-Do List -->
+    <div class="todo">
+      <h2>My To-Do List</h2>
+      <input type="text" id="todo-input" placeholder="Enter a new task..." />
+      <button onclick="addTask()">Add Task</button>
+      <ul id="todo-list"></ul>
+    </div>
+
+  </div>
+
+  <script>
+    // Contact Form
+    function submitForm() {
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const subject = document.getElementById("subject").value.trim();
+      const message = document.getElementById("message").value.trim();
+      const status = document.getElementById("form-status");
+
+      if (name && email && subject && message) {
+        status.textContent = "Thank you! We'll get back to you soon.";
+        status.style.color = "green";
+        setTimeout(() => status.textContent = "", 4000);
+        document.getElementById("name").value = "";
+        document.getElementById("email").value = "";
+        document.getElementById("subject").value = "";
+        document.getElementById("message").value = "";
+      } else {
+        status.textContent = "Please fill in all fields.";
+        status.style.color = "red";
+        setTimeout(() => status.textContent = "", 3000);
+      }
+    }
+
+    // To-Do List
+    function addTask() {
+      const input = document.getElementById("todo-input");
+      const taskText = input.value.trim();
+      if (!taskText) return;
+
+      const li = document.createElement("li");
+      const span = document.createElement("span");
+      span.textContent = taskText;
+
+      const delBtn = document.createElement("button");
+      delBtn.textContent = "Delete";
+      delBtn.onclick = function () {
+        li.remove();
+      };
+
+      li.appendChild(span);
+      li.appendChild(delBtn);
+      document.getElementById("todo-list").appendChild(li);
+      input.value = "";
+    }
+  </script>
+
+</body>
+</html>
